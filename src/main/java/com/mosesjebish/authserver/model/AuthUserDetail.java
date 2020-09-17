@@ -3,8 +3,10 @@ package com.mosesjebish.authserver.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,11 +19,12 @@ public class AuthUserDetail extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        super.getRoles().forEach(aRole -> {
-            grantedAuthorities.add(new SimpleGrantedAuthority(aRole.getName()));
-            aRole.getPermissions().forEach(aPermission -> {
-                grantedAuthorities.add(new SimpleGrantedAuthority(aPermission.getName()));
-            });
+        //if(!StringUtils.isEmpty(super.getRoles())) {
+        String[] rolesArray = StringUtils.split(super.getRoles(), ",");
+        List<String> roles = Arrays.asList(rolesArray);
+        //}
+        roles.forEach(aRole -> {
+            grantedAuthorities.add(new SimpleGrantedAuthority(aRole));
         });
         return grantedAuthorities;
     }
@@ -38,21 +41,21 @@ public class AuthUserDetail extends User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return super.isAccountNonLocked();
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return super.isEnabled();
+        return true;
     }
 }

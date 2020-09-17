@@ -1,10 +1,12 @@
 package com.mosesjebish.authserver.repository;
 
 import com.mosesjebish.authserver.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface UserDetailRepository extends JpaRepository<User, Integer> {
+@Repository
+public interface UserDetailRepository extends CrudRepository<User, Integer> {
     Optional<User> findByUsername(String name);
 }
