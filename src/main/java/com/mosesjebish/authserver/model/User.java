@@ -30,7 +30,6 @@ public class User implements Serializable {
     private String password;
     @Column(name = "email")
     private String email;
-
     @Column(name = "roles")
     private String roles;
 

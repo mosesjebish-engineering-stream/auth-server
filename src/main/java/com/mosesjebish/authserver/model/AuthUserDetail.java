@@ -19,13 +19,7 @@ public class AuthUserDetail extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-        //if(!StringUtils.isEmpty(super.getRoles())) {
-        String[] rolesArray = StringUtils.split(super.getRoles(), ",");
-        List<String> roles = Arrays.asList(rolesArray);
-        //}
-        roles.forEach(aRole -> {
-            grantedAuthorities.add(new SimpleGrantedAuthority(aRole));
-        });
+        grantedAuthorities.add(new SimpleGrantedAuthority(super.getRoles()));
         return grantedAuthorities;
     }
 
